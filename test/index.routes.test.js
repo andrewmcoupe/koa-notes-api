@@ -41,6 +41,6 @@ describe('status codes', () => {
         body: faker.random.words(6)
       });
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(201);
   });
 });

@@ -13,17 +13,20 @@ router.get('/', async ctx => {
 });
 
 router.post('/notes', async ctx => {
-  const { error } = isValid(ctx.request.body, noteSchema);
+  const { error, value } = isValid(ctx.request.body, noteSchema);
 
   if (error) {
     ctx.response.status = 400;
     return (ctx.body = {
+      message: 'Error',
       error: error.details[0].message
     });
   }
 
+  ctx.response.status = 201;
   ctx.body = {
-    message: 'New note added'
+    message: 'Success',
+    note: value
   };
 });
 
