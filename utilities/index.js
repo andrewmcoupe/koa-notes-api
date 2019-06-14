@@ -1,9 +1,7 @@
 const Joi = require('@hapi/joi');
 
 function isValid(req, validationSchema) {
-  const result = Joi.validate(req.body, validationSchema);
-
-  return result;
+  return Joi.validate(req, validationSchema);
 }
 
 module.exports = {
