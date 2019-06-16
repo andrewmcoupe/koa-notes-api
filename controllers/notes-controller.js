@@ -4,15 +4,12 @@ const HttpStatus = require('http-status-codes');
 const Note = require('../models/Note');
 
 async function addNote(ctx) {
-  // Run request body through Joi validation
-  // value is the request body
-  // error is null if all is ok
   const { error, value } = isValid(ctx.request.body, noteSchema);
 
   if (error) {
     ctx.response.status = HttpStatus.BAD_REQUEST;
     return (ctx.body = {
-      message: 'Error',
+      message: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST),
       error: error.details[0].message
     });
   }
