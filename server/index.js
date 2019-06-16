@@ -6,9 +6,14 @@ const app = new Koa();
 const PORT = process.env.PORT || 8081;
 
 const router = require('../routes');
+const db = require('../db');
 
 app.use(bodyParser());
-app.use(logger());
+
+if (!process.env.TEST_ENV == 'true') {
+  app.use(logger());
+}
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (ctx, next) => {
@@ -27,4 +32,4 @@ app.on('error', (err, ctx) => {
 
 const server = app.listen(PORT);
 
-module.exports = server;
+module.exports = { server, db };
