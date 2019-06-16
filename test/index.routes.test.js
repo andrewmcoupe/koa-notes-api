@@ -1,35 +1,28 @@
-process.env.TEST_ENV = 'true';
-
-const { server, db } = require('../server');
+const server = require('../server');
 const request = require('supertest');
 const faker = require('faker');
 const Note = require('../models/Note');
 const mongoose = require('mongoose');
+const HttpStatus = require('http-status-codes');
+const { populateTestDb } = require('../utilities/populate-test-db');
 
-async function populateTestDb() {
-  const note1 = new Note({
-    title: faker.random.words(4),
-    body: faker.random.words(4)
-  });
+// Set to test environment
+beforeAll(() => {
+  process.env.NODE_ENV = 'test';
+});
 
-  const note2 = new Note({
-    title: faker.random.words(4),
-    body: faker.random.words(4)
-  });
-
-  await note1.save();
-  await note2.save();
-}
-
+// Populate test DB before each test
 beforeEach(async () => {
   await populateTestDb();
 });
 
+// Drop test collection after each test
 afterEach(async () => {
   await Note.collection.drop();
   server.close();
 });
 
+// Close DB connection after all tests have run
 afterAll(async () => {
   mongoose.disconnect();
 });
@@ -38,7 +31,7 @@ describe('status codes', () => {
   it('should respond with status code 200 for /api', async () => {
     const response = await request(server).get('/api/notes');
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(HttpStatus.OK);
   });
 
   it('should respond with status code 400 for /api/notes with bad request', async () => {
@@ -48,7 +41,7 @@ describe('status codes', () => {
         title: 5
       });
 
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(HttpStatus.BAD_REQUEST);
   });
 
   it('should respond with status code 400 for /api/notes', async () => {
@@ -58,7 +51,7 @@ describe('status codes', () => {
         title: faker.random.words(3)
       });
 
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(HttpStatus.BAD_REQUEST);
   });
 
   it('should respond with status code 200 for /api/notes', async () => {
@@ -69,6 +62,6 @@ describe('status codes', () => {
         body: faker.random.words(6)
       });
 
-    expect(response.status).toEqual(201);
+    expect(response.status).toEqual(HttpStatus.OK);
   });
 });

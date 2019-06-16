@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const connectionString =
-  process.env.TEST_ENV === 'true'
+  process.env.NODE_ENV === 'test'
     ? process.env.MONGO_URI_TEST
     : process.env.MONGO_URI;
 
