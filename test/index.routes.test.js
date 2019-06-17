@@ -102,6 +102,14 @@ describe('status codes', () => {
     const response = await request(server).get(`/api/notes/${id}`);
 
     expect(response.status).toEqual(HttpStatus.OK);
+  });
+
+  it('should respond with correct data for POST /api/notes/:id', async () => {
+    const allNotes = await request(server).get('/api/notes');
+    const { _id: id } = allNotes.body.notes[0];
+
+    const response = await request(server).get(`/api/notes/${id}`);
+
     expect(response.body).toEqual(
       expect.objectContaining({
         message: expect.any(String),
