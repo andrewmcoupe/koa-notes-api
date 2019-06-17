@@ -6,6 +6,7 @@ const router = new Router({
 const notesController = require('../controllers/notes-controller');
 
 router.get('/notes', notesController.getNotes);
+router.get('/notes/:id', notesController.getNoteById);
 router.post('/notes', notesController.addNote);
 
 module.exports = router;
