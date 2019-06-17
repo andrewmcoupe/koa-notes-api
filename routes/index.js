@@ -3,7 +3,7 @@ const router = new Router({
   prefix: '/api'
 });
 
-const notesController = require('../controllers/notes-controller');
+const notesController = require('../controllers/notes');
 
 router.get('/notes', notesController.getNotes);
 router.get('/notes/:id', notesController.getNoteById);
