@@ -124,4 +124,62 @@ describe('status codes', () => {
       })
     );
   });
+
+  it('should respond with status code 200 and correct data for PUT /api/notes/:id', async () => {
+    const allNotes = await request(server).get('/api/notes');
+    const { _id: id } = allNotes.body.notes[0];
+    const noteUpdate = {
+      title: faker.random.words(3),
+      body: faker.random.words(3)
+    };
+
+    const response = await request(server)
+      .put(`/api/notes/${id}`)
+      .send(noteUpdate);
+
+    expect(response.status).toEqual(HttpStatus.OK);
+    expect(response.body.note.title).toEqual(noteUpdate.title);
+    expect(response.body.note.body).toEqual(noteUpdate.body);
+  });
+
+  it('should respond with status code 404 for PUT /api/notes/:id', async () => {
+    const noteUpdate = {
+      title: faker.random.words(3),
+      body: faker.random.words(3)
+    };
+
+    const response = await request(server)
+      .put(`/api/notes/123123123123`)
+      .send(noteUpdate);
+
+    expect(response.status).toEqual(HttpStatus.NOT_FOUND);
+  });
+
+  it('should respond with status code 400 for PUT /api/notes/:id', async () => {
+    const allNotes = await request(server).get('/api/notes');
+    const { _id: id } = allNotes.body.notes[0];
+    const noteUpdate = {
+      title: faker.random.words(3)
+    };
+    const response = await request(server)
+      .put(`/api/notes/${id}`)
+      .send(noteUpdate);
+
+    expect(response.status).toEqual(HttpStatus.BAD_REQUEST);
+  });
+
+  it('should respond with status code 200 for DELETE /api/notes/:id', async () => {
+    const allNotes = await request(server).get('/api/notes');
+    const { _id: id } = allNotes.body.notes[0];
+
+    const response = await request(server).delete(`/api/notes/${id}`);
+
+    expect(response.status).toEqual(HttpStatus.OK);
+  });
+
+  it('should respond with status code 404 for DELETE /api/notes/:id', async () => {
+    const response = await request(server).delete(`/api/notes/123123123123`);
+
+    expect(response.status).toEqual(HttpStatus.NOT_FOUND);
+  });
 });

@@ -11,7 +11,11 @@ mongoose.connect(connectionString, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Connected to MongoDB');
+  console.log(
+    `Connected to ${
+      process.env.NODE_ENV === 'test' ? 'Mongo Test DB' : 'MongoDB'
+    }`
+  );
 });
 
 module.exports = db;
