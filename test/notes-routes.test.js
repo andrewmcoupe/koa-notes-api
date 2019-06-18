@@ -1,25 +1,20 @@
-const server = require('../server');
+const { server } = require('../server');
 const request = require('supertest');
 const faker = require('faker');
 const Note = require('../models/Note');
 const mongoose = require('mongoose');
 const HttpStatus = require('http-status-codes');
-const { populateTestDb } = require('../utilities/populate-test-db');
-
-// Set to test environment
-beforeAll(() => {
-  process.env.NODE_ENV = 'test';
-});
+const { populateNotesTestDb } = require('../utilities/populate-test-db');
 
 // Populate test DB before each test
 beforeEach(async () => {
-  await populateTestDb();
+  await populateNotesTestDb();
 });
 
 // Drop test collection after each test
 afterEach(async () => {
   await Note.collection.drop();
-  server.close();
+  await server.close();
 });
 
 // Close DB connection after all tests have run

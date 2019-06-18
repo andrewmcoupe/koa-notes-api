@@ -6,7 +6,8 @@ const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 
-const router = require('../routes');
+const notes = require('../routes/notes-routes');
+const users = require('../routes/user-routes');
 const db = require('../db');
 const errorHandler = require('../middleware/error-handler');
 
@@ -16,8 +17,8 @@ if (!process.env.NODE_ENV == 'test') {
   app.use(logger());
 }
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(notes.routes());
+app.use(users.routes());
 app.use(errorHandler());
 
 app.on('error', (err, ctx) => {
@@ -27,4 +28,4 @@ app.on('error', (err, ctx) => {
 const PORT = process.env.PORT || 8081;
 const server = app.listen(PORT);
 
-module.exports = server;
+module.exports = { server, app };

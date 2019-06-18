@@ -9,6 +9,23 @@ const noteSchema = Joi.object().keys({
     .required()
 });
 
+const userSchema = Joi.object().keys({
+  name: Joi.string()
+    .min(2)
+    .max(255)
+    .required(),
+  email: Joi.string()
+    .min(2)
+    .max(255)
+    .email()
+    .required(),
+  password: Joi.string()
+    .min(2)
+    .max(255)
+    .required()
+});
+
 module.exports = {
-  noteSchema
+  noteSchema,
+  userSchema
 };
