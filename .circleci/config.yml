@@ -15,4 +15,4 @@ jobs:
           command: npm install
       - run:
           name: test
-          command: npm test -- MONGO_URI_TEST=mongodb+srv://andrewmcoupe:Oliver24!!@cluster0-bctzs.mongodb.net/notes-api-test?retryWrites=true&w=majority
+          command: MONGO_URI_TEST=mongodb+srv://andrewmcoupe:Oliver24!!@cluster0-bctzs.mongodb.net/notes-api-test?retryWrites=true&w=majority npm test
