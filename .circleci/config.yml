@@ -13,4 +13,4 @@ jobs:
           command: npm install       
       - run:
           name: test
-          command: MONGO_TEST_URI=$MONGO_URI_TEST && npm test
+          command: MONGO_URI_TEST=$MONGO_URI_TEST && npm test
