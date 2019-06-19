@@ -5,14 +5,12 @@ jobs:
     docker:
       - image: circleci/node:10
         environment:
-          MONGO_URI_TEST: $MONGO_URI_TEST
+          NODE_ENV: test
+          MONGO_URI_TEST: mongodb+srv://andrewmcoupe:Oliver24!!@cluster0-bctzs.mongodb.net/notes-api-test?retryWrites=true&w=majority
     steps:
       - checkout
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: show-envar
-          command: echo process.env
       - run:
           name: install-deps
           command: npm install
