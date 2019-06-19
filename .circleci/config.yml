@@ -12,5 +12,8 @@ jobs:
           name: install-deps
           command: npm install
       - run:
+          name: test-env-vars
+          command: echo $MONGO_URI         
+      - run:
           name: test
           command: npm test
