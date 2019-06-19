@@ -12,7 +12,7 @@ jobs:
       #     key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: show-envar
-          command: echo $MONGO_URI_TEST
+          command: echo process.env
       - run:
           name: install-deps
           command: npm install
