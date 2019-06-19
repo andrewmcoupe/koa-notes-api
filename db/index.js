@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-// require('dotenv').config();
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const connectionString =
   process.env.NODE_ENV === 'test'
