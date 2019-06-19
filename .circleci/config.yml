@@ -4,19 +4,15 @@ jobs:
     working_directory: ~/koa-notes-api
     docker:
       - image: circleci/node:10
+        environment:
+          MONGO_URI_TEST: $MONGO_URI_TEST
     steps:
       - checkout
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-deps
-          command: npm install
-      - run:
-          name: set-test-env-vars
-          command: MONGO_URI_TEST=$MONGO_URI_TEST
-      - run:
-          name: show-test-db
-          command: echo process.env.MONGO_URI_TEST          
+          command: npm install          
       - run:
           name: test
           command: npm test
