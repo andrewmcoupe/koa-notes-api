@@ -12,6 +12,9 @@ jobs:
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "package.json" }}
       - run:
+          name: node-env
+          command: echo $NODE_ENV
+      - run:
           name: install-deps
           command: npm install
       - run:

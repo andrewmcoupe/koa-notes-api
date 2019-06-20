@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
+let connectionString;
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
+  connectionString = process.env.MONGO_URI_TEST;
 }
 
-const connectionString =
-  process.env.NODE_ENV === 'test'
-    ? process.env.MONGO_URI_TEST
-    : process.env.MONGO_URI;
+connectionString = process.env.MONGO_URI;
 
 mongoose.connect(connectionString, { useNewUrlParser: true });
 
